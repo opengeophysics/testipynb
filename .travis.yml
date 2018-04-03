@@ -15,7 +15,7 @@ env:
     - PYPI_PY=3.6  # deploy to pypi from python 3.6
 
 install:
-  - pip install -r requirements.txt
+  - pip install -r requirements_dev.txt
   - python setup.py install
   - make build
 
