@@ -5,3 +5,5 @@ nbformat
 nose
 nose-cov
 properties
+sphinx_rtd_theme
+sphinx
