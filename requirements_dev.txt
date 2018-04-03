@@ -1,8 +1,6 @@
-future
 numpy>=1.7
-ipywidgets
 jupyter
 nbconvert
 nbformat
-unittest
 nose
+nose-cov
