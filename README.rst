@@ -13,4 +13,28 @@ why?
 installation
 ------------
 
+.. code::
+
+    pip install nbtest
+
+usage
+-----
+
+.. code:: python
+
+    import nbtest
+    import os
+    import sys
+    import unittest
+
+    NBDIR = '../notebooks'
+
+    class TestFail(unittest.TestCase):
+
+        def test_notebooks(self):
+            Test = nbtest.TestNotebooks(directory=NBDIR)
+            self.assertTrue(Test.run_tests())
+
+    if __name__ == "__main__":
+    unittest.main()
 

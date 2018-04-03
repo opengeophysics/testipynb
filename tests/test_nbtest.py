@@ -11,7 +11,7 @@ class TestMyNotebooks(unittest.TestCase):
             ['notebooks/passing_notebooks']
         )
         Test = nbtest.TestNotebooks(directory=directory)
-        Test.run_tests()
+        self.assertTrue(Test.run_tests())
 
 class TestFail(unittest.TestCase):
 
@@ -23,8 +23,7 @@ class TestFail(unittest.TestCase):
         )
 
         Test = nbtest.TestNotebooks(directory=directory)
-        Test.run_tests()
-
+        self.assertTrue(Test.run_tests())
 
 
 if __name__ == "__main__":

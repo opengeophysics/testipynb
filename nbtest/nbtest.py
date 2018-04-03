@@ -68,7 +68,7 @@ def get_test(nbname, nbpath):
 
                             print(u"{}".format(msg + traceback))
 
-                            assert passing, msg #+ traceback
+                            assert passing, msg
 
             print("   ... {0} Passed \n".format(nbname))
 
@@ -129,20 +129,34 @@ class TestNotebooks(properties.HasProperties, unittest.TestCase):
         self.nbpaths = nbpaths
         self.nbnames = nbnames
 
-    def get_tests(self):
-        tests = dict()
+    @property
+    def test_dict(self):
+        if getattr(self, '_test_dict', None) is None:
+            tests = dict()
 
-        # build test for each notebook
-        for nb, nbpath in zip(self.nbnames, self.nbpaths):
-            tests["test_"+nb] = get_test(nb, nbpath)
+            # build test for each notebook
+            for nb, nbpath in zip(self.nbnames, self.nbpaths):
+                tests["test_"+nb] = get_test(nb, nbpath)
+            self._test_dict = tests
+        return self._test_dict
 
+    def get_tests(self, obj=None):
         # create class to unit test notebooks
-        NbTestCase = type("{}".format(self.name), (unittest.TestCase,), tests)
-        NbTestCase.py2_ignore = self.py2_ignore
-        return unittest.TestSuite(map(NbTestCase, tests.keys()))
+        if obj is None:
+            obj = "{}".format(self.name)
+            NbTestCase = type(obj, (unittest.TestCase,), self.test_dict)
+            NbTestCase.py2_ignore = self.py2_ignore
+            return NbTestCase
+        else:
+            for key, val in self.test_dict:
+                setattr(obj, key, val)
+            obj.py2_ignore = self.py2_ignore
+            return obj
 
-    def run_tests(self, verbose=True):
-        tests = self.get_tests()
+
+    def run_tests(self):
+        NbTestCase = self.get_tests()
+        tests = unittest.TestSuite(map(NbTestCase, self.test_dict.keys()))
         result = unittest.TestResult()
         testRunner = unittest.TextTestRunner()
         result = testRunner.run(tests)
