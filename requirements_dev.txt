@@ -4,3 +4,4 @@ nbconvert
 nbformat
 nose
 nose-cov
+properties
