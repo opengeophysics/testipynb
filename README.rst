@@ -23,8 +23,6 @@ usage
 .. code:: python
 
     import nbtest
-    import os
-    import sys
     import unittest
 
     NBDIR = '../notebooks'
