@@ -25,7 +25,10 @@ def get_test(nbname, nbpath, timeout=600):
             "---------------------".format(nbname)
         )
 
-        if nbname in self.py2_ignore and sys.version_info[0] == 2:
+        if (
+            (nbname in self.ignore) or
+            (nbname in self.py2_ignore and sys.version_info[0] == 2)
+        ):
             print(" Skipping {}".format(nbname))
             return
 
@@ -97,9 +100,15 @@ class TestNotebooks(properties.HasProperties, unittest.TestCase):
         default='.'
     )
 
+    ignore = properties.List(
+        "list of notebooks to ignore when testing",
+        properties.String("file to ignore when testing"),
+        default=[]
+    )
+
     py2_ignore = properties.List(
         "list of notebook names to ignore if testing on python 2",
-        properties.String("file to ignore"),
+        properties.String("file to ignore in python 2"),
         default=[]
     )
 
@@ -159,14 +168,13 @@ class TestNotebooks(properties.HasProperties, unittest.TestCase):
         # create class to unit test notebooks
         if obj is None:
             obj = "{}".format(self._name)
-            NbTestCase = type(obj, (unittest.TestCase,), self.test_dict)
-            NbTestCase.py2_ignore = self.py2_ignore
-            return NbTestCase
+            obj = type(obj, (unittest.TestCase,), self.test_dict)
         else:
             for key, val in self.test_dict:
                 setattr(obj, key, val)
-            obj.py2_ignore = self.py2_ignore
-            return obj
+        obj.ignore = self.ignore
+        obj.py2_ignore = self.py2_ignore
+        return obj
 
 
     def run_tests(self):

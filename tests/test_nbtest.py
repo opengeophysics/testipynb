@@ -35,6 +35,17 @@ class TestMyNotebooks(unittest.TestCase):
         Test = nbtest.TestNotebooks(directory=directory)
         self.assertTrue(Test.run_tests())
 
+    def test_skipping_notebooks(self):
+        directory = os.path.sep.join(
+            os.path.abspath(__file__).split(os.path.sep)[:-1] +
+            ['notebooks']
+        )
+        Test = nbtest.TestNotebooks(
+            directory=directory,
+            ignore=["failing_notebook", "failing_notebook2"]
+        )
+        self.assertTrue(Test.run_tests())
+
     @unittest.expectedFailure
     def test_simple_fail(self):
         directory = os.path.sep.join(
