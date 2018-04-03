@@ -14,6 +14,21 @@ __all__ = ['TestNotebooks']
 
 
 def get_test(nbname, nbpath, timeout=600):
+    """
+    construct a test method based on on the notebook name, path, and
+    nbconvert Preprocessor options
+
+    ** Required Inputs **
+    :param str nbname: name of the notebook (without the file extension)
+    :param str nbpath: full filepath to the notebook including the '.ipynb'
+                       file extension
+
+    ** Optional Inputs **
+    :param int timeout: preprocessor timeout
+
+    ** Returns **
+    :returns: test_func a function for testing the notebook using nbconvert
+    """
 
     # use nbconvert to execute the notebook
     def test_func(self):
@@ -124,7 +139,7 @@ class TestNotebooks(properties.HasProperties, unittest.TestCase):
     )
 
     _nbnames = properties.List(
-        "names of all of the notebooks",
+        "names of all of the notebooks without the '.ipynb' file extension",
         properties.String("name of notebook")
     )
 
@@ -155,6 +170,10 @@ class TestNotebooks(properties.HasProperties, unittest.TestCase):
 
     @property
     def test_dict(self):
+        """
+        dictionary of the name of the test (keys) and test functions (values)
+        built based upon the directory provided
+        """
         if getattr(self, '_test_dict', None) is None:
             tests = dict()
 
@@ -165,6 +184,9 @@ class TestNotebooks(properties.HasProperties, unittest.TestCase):
         return self._test_dict
 
     def get_tests(self, obj=None):
+        """
+        Create a unittest.TestCase object to attach the unit tests to.
+        """
         # create class to unit test notebooks
         if obj is None:
             obj = "{}".format(self._name)
@@ -178,6 +200,18 @@ class TestNotebooks(properties.HasProperties, unittest.TestCase):
 
 
     def run_tests(self):
+        """
+        Run the unit-tests. Returns :code:`True` if all tests were successful
+        and code`False` if there was a failure.
+
+        .. code:: python
+
+            import nbtest
+            test = nbtest.TestNotebooks(directory='./notebooks')
+            passed = test.run_tests()
+            assert(passed)
+
+        """
         NbTestCase = self.get_tests()
         tests = unittest.TestSuite(map(NbTestCase, self.test_dict.keys()))
         result = unittest.TestResult()
