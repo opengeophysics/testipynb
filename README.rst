@@ -29,7 +29,7 @@ usage
 
     NBDIR = '../notebooks'
 
-    class TestFail(unittest.TestCase):
+    class TestNotebooks(unittest.TestCase):
 
         def test_notebooks(self):
             Test = nbtest.TestNotebooks(directory=NBDIR)
