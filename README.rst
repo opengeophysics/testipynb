@@ -60,6 +60,7 @@ connections
 -----------
 
 :code:`testipynb` is used in:
+
 - https://github.com/simpeg-research/heagy_2018_AEM
 
 If you use :code:`testipynb` in one of your repositories and would like it listed, please `edit this file <https://github.com/lheagy/testipynb/edit/master/README.rst>`_ 
