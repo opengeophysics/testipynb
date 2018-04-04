@@ -6,8 +6,8 @@ testipynb
     :target: https://pypi.python.org/pypi/testipynb
     :alt: Latest PyPI version
 
-.. image:: https://readthedocs.org/projects/testipynb/badge/?version=latest
-    :target: http://testipynb.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/nbtest/badge/?version=latest
+    :target: http://nbtest.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
 .. image:: https://travis-ci.org/simpeg-research/heagy_2018_AEM.svg?branch=master
