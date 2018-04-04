@@ -1,5 +1,5 @@
 [run]
-source = nbtest
+source = testipynb
 omit =
     */python?.?/*
     */lib-python/?.?/*.py

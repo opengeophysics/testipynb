@@ -1,4 +1,4 @@
-import nbtest
+import testipynb
 import os
 import unittest
 
@@ -9,7 +9,7 @@ class TestClassAttributes(unittest.TestCase):
             os.path.abspath(__file__).split(os.path.sep)[:-1] +
             ['notebooks', 'passing_notebooks']
         )
-        Test = nbtest.TestNotebooks(directory=directory)
+        Test = testipynb.TestNotebooks(directory=directory)
 
         nbnames = ['HelloWorld', 'notebook_that_loads_things']
         self.assertTrue(
@@ -32,7 +32,7 @@ class TestMyNotebooks(unittest.TestCase):
             os.path.abspath(__file__).split(os.path.sep)[:-1] +
             ['notebooks', 'passing_notebooks']
         )
-        Test = nbtest.TestNotebooks(directory=directory)
+        Test = testipynb.TestNotebooks(directory=directory)
         self.assertTrue(Test.run_tests())
 
     def test_skipping_notebooks(self):
@@ -40,7 +40,7 @@ class TestMyNotebooks(unittest.TestCase):
             os.path.abspath(__file__).split(os.path.sep)[:-1] +
             ['notebooks']
         )
-        Test = nbtest.TestNotebooks(
+        Test = testipynb.TestNotebooks(
             directory=directory,
             ignore=["failing_notebook", "failing_notebook2"]
         )
@@ -53,7 +53,7 @@ class TestMyNotebooks(unittest.TestCase):
             ['notebooks', 'failing_notebooks']
         )
 
-        Test = nbtest.TestNotebooks(directory=directory)
+        Test = testipynb.TestNotebooks(directory=directory)
         self.assertTrue(Test.run_tests())
 
 

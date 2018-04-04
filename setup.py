@@ -29,8 +29,8 @@ with open('README.rst') as f:
     LONG_DESCRIPTION = ''.join(f.readlines())
 
 setup(
-    name = 'nbtest',
-    version = '0.0.3',
+    name = 'testipynb',
+    version = '0.0.1',
     packages = find_packages(),
     install_requires = [
         'future',
@@ -43,11 +43,11 @@ setup(
     ],
     author = 'Lindsey Heagy',
     author_email = 'lindseyheagy@gmail.com',
-    description = 'nbtest',
+    description = 'testipynb',
     long_description = LONG_DESCRIPTION,
     keywords = 'jupyter, testing',
-    url = 'http://github.com/lheagy/nbtest',
-    download_url = 'http://github.com/lheagy/nbtest',
+    url = 'http://github.com/lheagy/testipynb',
+    download_url = 'http://github.com/lheagy/testipynb',
     classifiers=CLASSIFIERS,
     platforms = ['Windows', 'Linux', 'Solaris', 'Mac OS-X', 'Unix'],
     license='MIT License',

@@ -9,14 +9,14 @@ build_cython:
 	python setup.py build_ext -i cython
 
 coverage:
-	nosetests --logging-level=INFO --with-coverage --cover-package=nbtest --cover-html
+	nosetests --logging-level=INFO --with-coverage --cover-package=testipynb --cover-html
 	open cover/index.html
 
 lint:
-	pylint --output-format=html nbtest > pylint.html
+	pylint --output-format=html testipynb > pylint.html
 
 graphs:
-	pyreverse -my -A -o pdf -p nbtest nbtest/**.py nbtest/**/**.py
+	pyreverse -my -A -o pdf -p testipynb testipynb/**.py testipynb/**/**.py
 
 tests:
 	nosetests --logging-level=INFO
