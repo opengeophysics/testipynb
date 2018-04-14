@@ -13,6 +13,10 @@ testipynb
 .. image:: https://travis-ci.org/simpeg-research/heagy_2018_AEM.svg?branch=master
     :target: https://travis-ci.org/simpeg-research/heagy_2018_AEM
     :alt: Travis CI build status
+       
+.. image:: https://codecov.io/gh/opengeophysics/testipynb/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/opengeophysics/testipynb
+    :alt: coverage
 
 .. image:: https://img.shields.io/github/license/lheagy/testipynb.svg
     :target: https://github.com/lheagy/testipynb/blob/master/LICENSE
@@ -43,18 +47,28 @@ usage
 .. code:: python
 
     import testipynb
+    
+    NBDIR = '../notebooks'
+    
+    Test = testipynb.TestNotebooks(directory=NBDIR)
+    self.assertTrue(Test.run_tests())
+
+or in a unit-test file: 
+
+
+.. code:: python
+
+    import testipynb
     import unittest
 
     NBDIR = '../notebooks'
 
-    class TestNotebooks(unittest.TestCase):
-
-        def test_notebooks(self):
-            Test = testipynb.TestNotebooks(directory=NBDIR)
-            self.assertTrue(Test.run_tests())
+    Test = testipynb.TestNotebooks(directory=NBDIR, timeout=2100)
+    TestNotebooks = Test.get_tests()
 
     if __name__ == "__main__":
         unittest.main()
+
 
 connections
 -----------
