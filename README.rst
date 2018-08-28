@@ -51,7 +51,7 @@ usage
     NBDIR = '../notebooks'
     
     Test = testipynb.TestNotebooks(directory=NBDIR)
-    self.assertTrue(Test.run_tests())
+    Test.assertTrue(Test.run_tests())
 
 or in a unit-test file: 
 
