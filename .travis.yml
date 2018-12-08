@@ -20,7 +20,7 @@ install:
   - make build
 
 script:
-  - pytest tests --with-cov --cov testipynb --cov-config .coveragerc -v -s;
+  - pytest tests --cov testipynb --cov-config .coveragerc -v -s;
 
 after_success:
 
