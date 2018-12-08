@@ -39,7 +39,7 @@ setup(
         'jupyter',
         'nbconvert',
         'nbformat',
-        'properties'
+        'properties',
     ],
     author = 'Lindsey Heagy',
     author_email = 'lindseyheagy@gmail.com',

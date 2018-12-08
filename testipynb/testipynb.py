@@ -102,7 +102,7 @@ def get_test(nbname, nbpath, timeout=600):
     return test_func
 
 
-class TestNotebooks(properties.HasProperties, unittest.TestCase):
+class TestNotebooks(properties.HasProperties):
 
     _name = properties.String(
         "test name",

@@ -2,8 +2,8 @@ numpy>=1.7
 jupyter
 nbconvert
 nbformat
-nose
-nose-cov
+pytest
+pytest-cov
 properties
 sphinx_rtd_theme
 sphinx

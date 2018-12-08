@@ -10,8 +10,8 @@ testipynb
     :target: http://testipynb.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
-.. image:: https://travis-ci.org/simpeg-research/heagy_2018_AEM.svg?branch=master
-    :target: https://travis-ci.org/simpeg-research/heagy_2018_AEM
+.. image:: https://travis-ci.org/lheagy/testipynb.svg?branch=master
+    :target: https://travis-ci.org/lheagy/testipynb
     :alt: Travis CI build status
 
 .. image:: https://img.shields.io/github/license/lheagy/testipynb.svg
