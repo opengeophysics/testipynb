@@ -7,3 +7,5 @@ pytest-cov
 properties
 sphinx_rtd_theme
 sphinx
+black
+flake8

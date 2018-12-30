@@ -20,7 +20,9 @@ install:
   - make build
 
 script:
-  - pytest tests --cov=testipynb --cov-config=.coveragerc -v -s;
+  - make test
+  - make check
+  - make lint
 
 after_success:
 
@@ -42,7 +44,7 @@ after_success:
 
   # deploy to pypi on tags
   - mv credentials/.pypirc ~/.pypirc ;
-  - python setup.py sdist bdist_wheel --universal upload;
+  - make deploy;
 
 
 notifications:

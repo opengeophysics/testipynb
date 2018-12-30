@@ -3,16 +3,12 @@
 import unittest
 import sys
 import os
-import pprint
 import nbformat
-from nbconvert.preprocessors import (
-    ClearOutputPreprocessor, ExecutePreprocessor
-)
-from nbconvert.preprocessors.execute import CellExecutionError
+from nbconvert.preprocessors import ClearOutputPreprocessor, ExecutePreprocessor
 import properties
 
 
-__all__ = ['TestNotebooks']
+__all__ = ["TestNotebooks"]
 
 
 def get_test(nbname, nbpath, timeout=600):
@@ -42,55 +38,58 @@ def get_test(nbname, nbpath, timeout=600):
             "---------------------".format(nbname)
         )
 
-        if (
-            (nbname in self.ignore) or
-            (nbname in self.py2_ignore and sys.version_info[0] == 2)
+        if (nbname in self.ignore) or (
+            nbname in self.py2_ignore and sys.version_info[0] == 2
         ):
             print(" Skipping {}".format(nbname))
             return
 
         run_path = os.path.sep.join(nbpath.split(os.path.sep)[:-1])
         os.chdir(run_path)
-        ep = ClearOutputPreprocessor()
+        clear_output = ClearOutputPreprocessor()
 
-        with open(nbpath) as f:
-            nb = nbformat.read(f, as_version=4)
+        with open(nbpath) as nbfile:
+            notebook = nbformat.read(nbfile, as_version=4)
 
-            ep.preprocess(nb, {})
+            clear_output.preprocess(notebook, {})
 
-            ex = ExecutePreprocessor(
+            execute = ExecutePreprocessor(
                 timeout=timeout,
-                kernel_name='python{}'.format(sys.version_info[0]),
+                kernel_name="python{}".format(sys.version_info[0]),
                 allow_errors=True,
             )
 
-            out = ex.preprocess(nb, {})
+            out = execute.preprocess(notebook, {})
             os.chdir(cwd)
 
-            for cell in out[0]['cells']:
-                if 'outputs' in cell.keys():
-                    for output in cell['outputs']:
-                        if output['output_type'] == 'error':
+            for cell in out[0]["cells"]:
+                if "outputs" in cell.keys():
+                    for output in cell["outputs"]:
+                        if output["output_type"] == "error":
                             passing = False
 
                             err_msg = []
-                            for o in output['traceback']:
-                                err_msg += ["{}".format(o)]
+                            for traceback in output["traceback"]:
+                                err_msg += ["{}".format(traceback)]
                             err_msg = "\n".join(err_msg)
 
                             msg = """
 \n ... {} FAILED \n
 {} in cell [{}] \n-----------\n{}\n-----------\n
                             """.format(
-                                nbname, output['ename'],
-                                cell['execution_count'], cell['source'],
+                                nbname,
+                                output["ename"],
+                                cell["execution_count"],
+                                cell["source"],
                             )
 
                             traceback = """
 ----------------- >> begin Traceback << ----------------- \n
 {}\n
 \n----------------- >> end Traceback << -----------------\n
-                            """.format(err_msg)
+                            """.format(
+                                err_msg
+                            )
 
                             print(u"{}".format(msg + traceback))
 
@@ -102,49 +101,62 @@ def get_test(nbname, nbpath, timeout=600):
 
 
 class TestNotebooks(properties.HasProperties):
+    """
+    Class that generates a suite of tests for a directory of notebooks.
 
-    _name = properties.String(
-        "test name",
-        default = "NbTestCase"
-    )
+    .. code:: python
+
+        Test = TestNotebooks(directory="notebooks")
+        assertTrue(Test.run_tests())
+
+    or if you are using pytest, you can create a file called
+    `test_notebooks.py`
+
+    .. code:: python
+        Test = testipynb.TestNotebooks(directory="notebooks")
+        TestNotebooks = Test.get_tests()
+
+    and from a command line, run
+
+    .. code::
+        pytest test_notebooks.py
+
+    """
+
+    _name = properties.String("test name", default="NbTestCase")
 
     directory = properties.String(
-        "directory where the notebooks are stored",
-        required=True,
-        default='.'
+        "directory where the notebooks are stored", required=True, default="."
     )
 
     ignore = properties.List(
         "list of notebooks to ignore when testing",
         properties.String("file to ignore when testing"),
-        default=[]
+        default=[],
     )
 
     py2_ignore = properties.List(
         "list of notebook names to ignore if testing on python 2",
         properties.String("file to ignore in python 2"),
-        default=[]
+        default=[],
     )
 
     timeout = properties.Integer(
-        "timeout length for the execution of the notebook",
-        default=600,
-        min=0
+        "timeout length for the execution of the notebook", default=600, min=0
     )
 
     _nbpaths = properties.List(
-        "paths to all of the notebooks",
-        properties.String("path to notebook")
+        "paths to all of the notebooks", properties.String("path to notebook")
     )
 
     _nbnames = properties.List(
         "names of all of the notebooks without the '.ipynb' file extension",
-        properties.String("name of notebook")
+        properties.String("name of notebook"),
     )
 
-    @properties.validator('directory')
-    def _use_abspath(self, change):
-        change['value'] = os.path.abspath(change['value'])
+    @properties.validator("directory")
+    def _use_abspath(self, change):  # pylint: disable=no-self-use
+        change["value"] = os.path.abspath(change["value"])
 
     def __init__(self, **kwargs):
         super(TestNotebooks, self).__init__(**kwargs)
@@ -152,16 +164,13 @@ class TestNotebooks(properties.HasProperties):
         nbnames = []  # list of notebook names (for making the tests)
 
         # walk the test directory and find all notebooks
-        for dirname, dirnames, filenames in os.walk(self.directory):
+        for dirname, _, filenames in os.walk(self.directory):
             for filename in filenames:
-                if (
-                    filename.endswith(".ipynb") and not
-                    filename.endswith("-checkpoint.ipynb")
+                if filename.endswith(".ipynb") and not filename.endswith(
+                    "-checkpoint.ipynb"
                 ):
                     # get abspath of notebook
-                    nbpaths.append(
-                        dirname + os.path.sep + filename
-                    )
+                    nbpaths.append(dirname + os.path.sep + filename)
                     # strip off the file extension
                     nbnames.append("".join(filename[:-6]))
         self._nbpaths = nbpaths
@@ -173,12 +182,14 @@ class TestNotebooks(properties.HasProperties):
         dictionary of the name of the test (keys) and test functions (values)
         built based upon the directory provided
         """
-        if getattr(self, '_test_dict', None) is None:
+        if getattr(self, "_test_dict", None) is None:
             tests = dict()
 
             # build test for each notebook
-            for nb, nbpath in zip(self._nbnames, self._nbpaths):
-                tests["test_"+nb] = get_test(nb, nbpath, timeout=self.timeout)
+            for notebook, nbpath in zip(self._nbnames, self._nbpaths):
+                tests["test_" + notebook] = get_test(
+                    notebook, nbpath, timeout=self.timeout
+                )
             self._test_dict = tests
         return self._test_dict
 
@@ -197,7 +208,6 @@ class TestNotebooks(properties.HasProperties):
         obj.py2_ignore = self.py2_ignore
         return obj
 
-
     def run_tests(self):
         """
         Run the unit-tests. Returns :code:`True` if all tests were successful
@@ -211,11 +221,9 @@ class TestNotebooks(properties.HasProperties):
             assert(passed)
 
         """
-        NbTestCase = self.get_tests()
-        tests = unittest.TestSuite(map(NbTestCase, self.test_dict.keys()))
+        nb_test_case = self.get_tests()
+        tests = unittest.TestSuite(map(nb_test_case, self.test_dict.keys()))
         result = unittest.TestResult()
-        testRunner = unittest.TextTestRunner(verbosity=0)
-        result = testRunner.run(tests)
+        test_runner = unittest.TextTestRunner(verbosity=0)
+        result = test_runner.run(tests)
         return result.wasSuccessful()
-
-
