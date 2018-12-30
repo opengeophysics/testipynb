@@ -1,3 +1,5 @@
+"""Module for testing a repository of Jupyter Notebooks"""
+
 import unittest
 import sys
 import os
@@ -49,9 +51,7 @@ def get_test(nbname, nbpath, timeout=600):
 
         run_path = os.path.sep.join(nbpath.split(os.path.sep)[:-1])
         os.chdir(run_path)
-        ep = ClearOutputPreprocessor(
-            resources={'metadata': {'path': run_path}}
-        )
+        ep = ClearOutputPreprocessor()
 
         with open(nbpath) as f:
             nb = nbformat.read(f, as_version=4)
@@ -62,7 +62,6 @@ def get_test(nbname, nbpath, timeout=600):
                 timeout=timeout,
                 kernel_name='python{}'.format(sys.version_info[0]),
                 allow_errors=True,
-                resources={'metadata': {'path': run_path}}
             )
 
             out = ex.preprocess(nb, {})
@@ -215,7 +214,7 @@ class TestNotebooks(properties.HasProperties):
         NbTestCase = self.get_tests()
         tests = unittest.TestSuite(map(NbTestCase, self.test_dict.keys()))
         result = unittest.TestResult()
-        testRunner = unittest.TextTestRunner()
+        testRunner = unittest.TextTestRunner(verbosity=0)
         result = testRunner.run(tests)
         return result.wasSuccessful()
 
