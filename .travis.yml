@@ -22,7 +22,7 @@ install:
 script:
   - make test
   - if [ ${TRAVIS_PYTHON_VERSION:0:1} == "3" ]; then
-      pip install black flake8;
+      pip install black flake8 pylint;
       make check;
       make lint;
     fi
