@@ -1,7 +1,7 @@
 # Build, package, test, and clean
 PROJECT=testipynb
 TESTDIR=tmp-test-dir
-PYTEST_ARGS=--cov-config=../.coveragerc --cov-report=term-missing --cov=$(PROJECT) --doctest-modules -v --pyargs
+PYTEST_ARGS=../tests --cov-config=../.coveragerc --cov-report=term-missing --cov=$(PROJECT) -v
 LINT_FILES=setup.py $(PROJECT)
 BLACK_FILES=setup.py $(PROJECT)
 FLAKE8_FILES=setup.py $(PROJECT)
@@ -25,7 +25,7 @@ install:
 test:
 	# Run a tmp folder to make sure the tests are run on the installed version
 	mkdir -p $(TESTDIR)
-	cd $(TESTDIR); MPLBACKEND='agg' pytest $(PYTEST_ARGS) $(PROJECT)
+	cd $(TESTDIR); MPLBACKEND='agg' pytest $(PYTEST_ARGS)
 	cp $(TESTDIR)/.coverage* .
 	rm -rvf $(TESTDIR)
 
@@ -50,3 +50,8 @@ docs:
 
 deploy:
 	python setup.py sdist bdist_wheel upload
+
+clean:
+	find . -name "*.pyc" -exec rm -v {} \;
+	find . -name ".coverage.*" -exec rm -v {} \;
+	rm -rvf build dist *.egg-info __pycache__ .coverage .cache .pytest_cache
