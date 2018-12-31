@@ -28,6 +28,7 @@ test:
 	cd $(TESTDIR); MPLBACKEND='agg' pytest $(PYTEST_ARGS)
 	cp $(TESTDIR)/.coverage* .
 	rm -rvf $(TESTDIR)
+	cd ..
 
 format:
 	black $(BLACK_FILES)
