@@ -14,27 +14,14 @@ env:
     - MASTER_BRANCH=master
     - PYPI_PY=3.6  # deploy to pypi from python 3.6
 
-# Setup anaconda
-before_install:
-# Install packages
-  - if [ ${TRAVIS_PYTHON_VERSION:0:1} == "2" ]; then
-      wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
-    else
-      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-    fi
-  - chmod +x miniconda.sh
-  - ./miniconda.sh -b -p $HOME/miniconda
-  - export PATH=/home/travis/anaconda/bin:/home/travis/miniconda/bin:$PATH
-  - conda update --yes conda
-
 install:
-  - conda install --quiet --yes pip python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib pytest pytest-cov sphinx_rtd_theme sphinx
+  - pip install -r requirements_dev.txt
   - python setup.py install
 
 script:
   - make test
   - if [ ${TRAVIS_PYTHON_VERSION:0:1} == "3" ]; then
-      conda install black flake8 pylint;
+      pip install black flake8 pylint;
       make check;
       make lint;
     fi
