@@ -32,7 +32,6 @@ setup(
     install_requires=[
         "future",
         "numpy>=1.7",
-        "ipywidgets",
         "jupyter",
         "nbconvert",
         "nbformat",

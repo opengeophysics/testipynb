@@ -1,9 +1,4 @@
-numpy>=1.7
-jupyter
-nbconvert
-nbformat
 pytest
 pytest-cov
-properties
 sphinx_rtd_theme
 sphinx
