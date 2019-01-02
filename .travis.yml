@@ -28,7 +28,7 @@ before_install:
   - conda update --yes conda
 
 install:
-  - conda install --yes pytest pytest-cov sphinx_rtd_theme sphinx
+  - conda install --quiet --yes pip python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib pytest pytest-cov sphinx_rtd_theme sphinx
   - python setup.py install
 
 script:
