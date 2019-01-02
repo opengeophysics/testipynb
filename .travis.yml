@@ -28,13 +28,13 @@ before_install:
   - conda update --yes conda
 
 install:
-  - pip install -r requirements_dev.txt
+  - conda install --yes pytest pytest-cov sphinx_rtd_theme sphinx
   - python setup.py install
 
 script:
   - make test
   - if [ ${TRAVIS_PYTHON_VERSION:0:1} == "3" ]; then
-      pip install black flake8 pylint;
+      conda install black flake8 pylint;
       make check;
       make lint;
     fi
