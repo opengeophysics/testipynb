@@ -23,11 +23,8 @@ install:
 
 script:
   - cd $TEST_DIR; pytest . --cov=testipynb --cov-config ../.coveragerc -v -s; cd ../
-  - if [ ${TRAVIS_PYTHON_VERSION:0:1} == "3" ]; then
-      pip install black flake8 pylint;
-      make check;
-      make lint;
-    fi
+  - make check;
+  - make lint;
 
 after_success:
   - if [ "$TEST" == "true" ]; then

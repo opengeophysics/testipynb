@@ -1,4 +1,10 @@
-pytest
+flake8
+black
+twine
+pytest>=3.6
 pytest-cov
+coverage
+codecov
+pylint
 sphinx_rtd_theme
 sphinx
