@@ -41,7 +41,6 @@ deploy:
     script: ci/deploy-pypi.sh
     on:
         tags: true
-        branch: master
 
 notifications:
   slack: simpeg:1KZq5giMtlJJ58TijIPgqf7n
