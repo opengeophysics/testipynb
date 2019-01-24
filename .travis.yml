@@ -19,12 +19,7 @@ env:
 install:
   - pip install --upgrade pip
   - pip install -r requirements_dev.txt
-  - make install
-  - if [ ${TRAVIS_PYTHON_VERSION:0:1} == "3" ]; then
-      pip install -r requirements.txt ;
-    else ;
-      python2.7 -m pip install -r requirements.txt ;
-    fi
+  - pip install -e .
 
 script:
   - cd $TEST_DIR; pytest . --cov=testipynb --cov-config ../.coveragerc -v -s; cd ../
