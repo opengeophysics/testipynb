@@ -13,10 +13,6 @@ testipynb
 .. image:: https://travis-ci.org/opengeophysics/testipynb.svg?branch=master
     :target: https://travis-ci.org/opengeophysics/testipynb
     :alt: Travis CI build status
-       
-.. image:: https://codecov.io/gh/opengeophysics/testipynb/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/opengeophysics/testipynb
-    :alt: coverage
 
 .. image:: https://codecov.io/gh/opengeophysics/testipynb/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/opengeophysics/testipynb
