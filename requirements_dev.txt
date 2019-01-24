@@ -1,9 +1,7 @@
-numpy>=1.7
-jupyter
-nbconvert
-nbformat
-nose
-nose-cov
-properties
+twine
+pytest>=3.6
+pytest-cov
+coverage
+codecov
 sphinx_rtd_theme
 sphinx

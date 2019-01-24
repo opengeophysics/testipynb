@@ -1,7 +1,8 @@
+.. _api:
 
-nbtest API
-**********
+API
+***
 
-.. automodule:: nbtest.nbtest
+.. automodule:: testipynb.testipynb
     :members:
     :undoc-members:
