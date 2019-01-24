@@ -10,12 +10,16 @@ testipynb
     :target: http://testipynb.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
-.. image:: https://travis-ci.org/lheagy/testipynb.svg?branch=master
-    :target: https://travis-ci.org/lheagy/testipynb
+.. image:: https://travis-ci.org/opengeophysics/testipynb.svg?branch=master
+    :target: https://travis-ci.org/opengeophysics/testipynb
     :alt: Travis CI build status
 
-.. image:: https://img.shields.io/github/license/lheagy/testipynb.svg
-    :target: https://github.com/lheagy/testipynb/blob/master/LICENSE
+.. image:: https://codecov.io/gh/opengeophysics/testipynb/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/opengeophysics/testipynb
+    :alt: coverage
+
+.. image:: https://img.shields.io/github/license/opengeophysics/testipynb.svg
+    :target: https://github.com/opengeophysics/testipynb/blob/master/LICENSE
     :alt: MIT license
 
 Unit-testing for a collection of jupyter notebooks. :code:`testipynb` relies on `nbconvert <https://nbconvert.readthedocs.io>`_ to run the notebooks and catches errors so that they are output (with syntax highlighting!) when unit-tests are run.
@@ -26,7 +30,7 @@ why?
 - If you want to share your notebooks and be confident that they _should_ work on someone else's machine
 - If you are using notebooks to generate figures in a publication and want to ensure they are reproducible (powerful when connected with `cron jobs on travis-ci <https://docs.travis-ci.com/user/cron-jobs/>`_)
 
-.. image:: https://raw.githubusercontent.com/lheagy/testipynb/master/docs/images/testing_syntax_highlighting.png
+.. image:: https://raw.githubusercontent.com/opengeophysics/testipynb/master/docs/images/testing_syntax_highlighting.png
     :width: 80%
     :align: center
 

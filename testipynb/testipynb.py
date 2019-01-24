@@ -106,6 +106,7 @@ class TestNotebooks(properties.HasProperties):
 
     .. code:: python
 
+        import testipynb
         Test = TestNotebooks(directory="notebooks")
         assertTrue(Test.run_tests())
 
@@ -113,12 +114,15 @@ class TestNotebooks(properties.HasProperties):
     `test_notebooks.py`
 
     .. code:: python
+
+        import testipynb
         Test = testipynb.TestNotebooks(directory="notebooks")
         TestNotebooks = Test.get_tests()
 
     and from a command line, run
 
-    .. code::
+    .. code:: shell
+
         pytest test_notebooks.py
 
     """
