@@ -26,11 +26,9 @@ with open("README.rst") as f:
 
 setup(
     name="testipynb",
-    version="0.0.2",
+    version="0.0.3",
     packages=find_packages(),
     install_requires=[
-        "future",
-        "numpy>=1.7",
         "jupyter",
         "nbconvert",
         "nbformat",
